@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <script>
+        // version 1
+        // class MyService {
+        //     // sync async
+        //     sum(x: number, y: number,
+        //         okCallback: (res: number) => void,
+        //         errCallback: (error: any) => void): void {
+        //         setTimeout(() => {
+        //             try {
+        //                 const total = x + y;
+        //                 okCallback(total);
+        //             }
+        //             catch (e) {
+        //                 errCallback(e);
+        //             }
+        //         }, 3000);
+        //     }
+        // }
+
+        class Utility {
+            timeout(time: number): Promise<any> {
+                return new Promise<any>((resolve) => {
+                    setTimeout(() => {
+                        resolve('TIME_OUT');
+                    }, time)
+                });
+            }
+        }
+
+        class MyService {
+
+            div(x: number, y: number): number {
+                if (x > y) {
+                    return x;
+                }
+                return y;
+            }
+
+            minus(x: number, y: number) {
+                return x - y;
+            }
+
+            mul(x: number, y: number): Promise<number> {
+                return Promise.resolve(x * y);
+            }
+
+            sum(x: number, y: number): Promise<number> {
+                return new Promise<number>((resolve, reject) => {
+                    setTimeout(() => {
+                        try {
+                            const total = x + y;
+                            // resolve(total);
+                        }
+                        catch (e) {
+                            // reject(e);
+                        }
+                    }, 3000);
+                })
+            }
+        }
+
+        async function onclickCallBack(): Promise<number> {
+            console.log('1');
+            const myservice = new MyService();
+            console.log('2');
+            for (let i = 0; i < 5; i++) {
+                try {
+                    console.log('3');
+                    const result: number = await myservice.sum(i, 20);
+                    console.log('result = ', result);
+                    console.log('4');
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+            console.log('5');
+            return 100;
+        }
+
+        async function initInvoker() {
+            console.log('0');
+            await onclickCallBack();
+            console.log('6');
+        }
+
+        async function handleTimeOut() {
+            const u = new Utility();
+            const raceResult: string | number = await Promise.race([onclickCallBack()
+                , u.timeout(300)]);
+
+            if (raceResult === 'TIME_OUT') {
+
+            }
+            console.log(raceResult);
+
+        }
+        handleTimeOut();
+        //initInvoker();
+        // alert('after invoke init function');
+        //ver 1
+        // myservice.sum(10, 20,
+        //     result => alert(result),
+        //     e => console.error(e));
+
+        //ver 2
+        // const resultPromise = myservice.sum(10, 20);
+        // resultPromise.then(result => {
+        //     alert(result);
+        // });
+        // resultPromise.catch(e => {
+        //     console.error(e);
+        // });
+
+
+        //Read card
+        //Face Rec
+        //Fingure
+        //open close gate
+
+
+        class Manager {
+            isBusy = false;
+
+            async getData() {
+                this.isBusy = true;
+                await Promise.resolve(2);
+                this.isBusy = false;
+            }
+        }
+    </script>
+</body>
+</html>

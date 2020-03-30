@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        .con1 {
+            background-color: red;
+            padding: 20px;
+            height:200px;
+        }
+        .con2{
+            background-color: green;
+            padding: 20px;
+            height:100px;
+
+        }
+    </style>
+
+
+</head>
+<body>
+    <h1>CORONA</h1>
+
+    <div class="con1" onclick="alert(1)">
+        <div class="con2" onclick="alert(2)">
+            <button id="btn1" onclick="alert(3)">1</button>
+            <button id="btn2" data-user-options="" onclick="alert(3)">2</button>
+            <button id="btn3" onclick="alert(3)">3</button>
+            <button id="btn4" onclick="alert(3)">4</button>
+            <button id="btn5" onclick="alert(3)">5</button>
+        </div>
+    </div>
+
+    <!--
+    
+        * var, let
+        * constructor
+        * prototype
+        * interface (product, customer, user) - only fields - dto - serialization
+        * this - apply, call, bind.
+        * () => help us with this context.
+        * inilne old syntax methods (function(){}). use only ()=>
+        * Promise - reslove, reject - standart. call back methods. 
+        * Promise.race & promise.all
+        * Promise.resolve, Promise.reject
+        * Async await (loops, try & catch)
+        
+    -->
+
+    <script>
+        // java, C#
+        class Employee {
+            print() {
+                // typeof this  ( current instance )- > Employee
+            }
+        }
+
+        function Person(firstName, lastName, age) {
+            let fullName = firstName + ' ' + lastName;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.age = age;
+            this.printFullName = function () {
+                alert('FullName :' + fullName);
+            }
+        }
+
+        // default this context = window
+        Person.prototype.print = function (param1, param2) {
+            console.log('param1', param1);
+            console.log('param2', param2);
+            alert(this.firstName + ' ' + this.lastName);
+        }
+        let p1 = new Person('Shimon', 'Dahan', 35);
+        let myFunc = p1.print;
+
+        // call functions:
+        //myFunc.apply(p1, [2]); // control this context.
+        //myFunc.call(p1, 2);
+
+        // bind
+        const myFunctionWithThis = myFunc.bind(p1, 'paramete1');
+        myFunctionWithThis('paramete2');
+
+        let p2 = new Person('David', 'Cohen', 68);
+        let p3 = new Person('Naama', 'Dahan', 15);
+        let p4 = new Person('Gilad', 'Cohen', 10);
+
+        //p1.printFullName();
+
+
+        // true
+        if (p1.print === p2.print) {
+
+        }
+
+        p1.print = function () {
+            alert('p1 print');
+        }
+
+        // false
+        if (p1.print === p2.print) {
+
+        }
+
+
+        delete p1.print;
+
+        // true
+        if (p1.print === p2.print) {
+
+        }
+
+        //$('')
+        //document.getElementsByName
+        //$.live('body', '.my-filter').click(function () {
+        //})
+        //click body
+
+        document.querySelectorAll('.my-filter').forEach(function (item) {
+            item.addEventListener('click', function () { });
+        });
+
+
+
+
+
+    </script>
+</body>
+</html>
