@@ -1,2 +1,2 @@
-# shimond-any-techs.co.il
+# microfocus - Advanced JS course
 microfocus-js-ts
